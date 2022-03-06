@@ -1,6 +1,7 @@
 package com.apodaca.pokedexapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.TooltipCompat;
 
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.apodaca.pokedexapp.R;
 import com.apodaca.pokedexapp.RetrofitClient;
 import com.apodaca.pokedexapp.models.Pokemon;
 import com.bumptech.glide.Glide;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -23,9 +25,9 @@ import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity {
 
-    TextView mTextName;
+    TextView mTextName, mTextBase, mTextPeso, mTextAltura;
     ImageView mImage;
-    Button mButton;
+    FloatingActionButton mButton;
     Timer t;
 
     @Override
@@ -34,8 +36,12 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         mTextName = findViewById(R.id.idName);
         mImage = findViewById(R.id.imageView);
-        mButton = findViewById(R.id.button);
+        mTextBase = findViewById(R.id.textSubtitle);
+        mTextPeso = findViewById(R.id.txtPeso);
+        mTextAltura = findViewById(R.id.txtAltura);
+        mButton = findViewById(R.id.fabRefresh);
 
+        TooltipCompat.setTooltipText(mButton, "Mostrar Pokemón");
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,15 +62,9 @@ public class HomeActivity extends AppCompatActivity {
             {
                 getPokemon();
             }
-
         };
 
         t.scheduleAtFixedRate(task,0,30000);
-
-
-
-
-
 
     }
 
@@ -76,8 +76,13 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
-                mTextName.setText(response.body().getName());
-//
+                if (response.body() != null){
+                    mTextName.setText(response.body().getName());
+                    mTextBase.setText("Experiencia base: "+ response.body().getBase_experience());
+                    mTextPeso.setText(String.valueOf( Double.parseDouble(response.body().getWeight())/10));
+                    mTextAltura.setText(String.valueOf(Double.parseDouble(response.body().getHeight())/10));
+                }
+
                 Glide.with(HomeActivity.this).load(response.body().getSprites().getFront_default()).into(mImage);
             }
 

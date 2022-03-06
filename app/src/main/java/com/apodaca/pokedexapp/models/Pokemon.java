@@ -3,10 +3,18 @@ package com.apodaca.pokedexapp.models;
 public class Pokemon {
     String id;
     String height;
+    String base_experience;
     String weight;
     String name;
     Sprites sprites;
 
+    public String getBase_experience() {
+        return base_experience;
+    }
+
+    public void setBase_experience(String base_experience) {
+        this.base_experience = base_experience;
+    }
 
     public String getId() {
         return id;
