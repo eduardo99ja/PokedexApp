@@ -51,6 +51,9 @@ La consulta deberá ser cada 30 segundos o presionando un botón, el botón debe
   <img src="https://res.cloudinary.com/du17vjpcn/image/upload/v1646587265/pokedex_wr9xy9.jpg" alt="Logo" >
 </div>
 
+## Demo
+<a href="https://github.com/eduardo99ja/PokedexApp/releases/download/v1.0.0/pokedex.apk">Apk</a>
+
 
 ### Hecho con
 
